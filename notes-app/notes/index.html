@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <style>
+            body{
+                background-color: #e7e7e7;
+            }
+            .input-username{
+                margin: auto;
+                display: block;
+            }
+            .input-password{
+                margin: auto;
+                display: block;
+            }
+            .input-note-title{
+                margin: auto;
+                display: block;
+            }
+            .input-note{
+                margin: auto;
+                display: block;
+                height: 20vw;
+                width: 30vw;
+            }
+            .input-button, .input-button-2{
+                margin: auto;
+                display: block;
+            }
+            .notes-div{
+                text-align: center;
+                display: block;
+            }
+            .note-id{
+                display: none;
+            }
+
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+            
+        </script>
+        <script type="text/javascript">
+            $(document).ready(()=>{
+
+                $(".input-button-2").click(() =>{
+                    $(".notes-div").empty();
+                    $.post({
+                        url: 'http://localhost:3000/getnotes',
+                        contentType: 'application/json',
+                        data: JSON.stringify({username: $(".input-username").val(),
+                        password: $(".input-password").val()}),
+                        dataType: 'json',
+                        success: function(response){ 
+
+                            for(var x = response.length - 1; x >= 0; x--){
+                                $(".notes-div").append("<div class='note-item'> <div class='notes-title'><h3>" + response[x].posts[0].title + "<h3/></div><div class='notes-content'>" + response[x].posts[1].content + "</div><div class='note-id'>" + response[x]._id + "</div></div>") }
+                            }
+                            
+                            
+                    } );
+
+                });
+
+                $(".input-button").click(()=>{
+                    $(".notes-div").empty();
+                    $.post({
+                    url: 'http://localhost:3000/save',
+                    contentType: 'application/json',
+                    data: JSON.stringify({username: $(".input-username").val(),
+                    password: $(".input-password").val(),
+                    title: $(".input-note-title").val(),
+                    content: $(".input-note").val()}),
+                    dataType: 'json',
+                    success: function(response){ console.log( response ); }
+                    } );
+
+                    $.post({
+                        url: 'http://localhost:3000/getnotes',
+                        contentType: 'application/json',
+                        data: JSON.stringify({username: $(".input-username").val(),
+                        password: $(".input-password").val()}),
+                        dataType: 'json',
+                        success: function(response){ 
+
+                            for(var x = response.length - 1; x >= 0; x--){
+                                $(".notes-div").append("<div class='note-item'> <div class='notes-title'><h3>" + response[x].posts[0].title + "<h3/></div><div class='notes-content'>" + response[x].posts[1].content + "</div><div class='note-id'>" + response[x]._id + "</div></div>") }
+                            }
+                            
+                            
+                    } );
+                });
+               
+            });
+        </script>
+    </head>
+    <body>
+        <input type="text" class="input-username" placeholder="username">
+        <input type="password" class="input-password" placeholder="password">
+        <input type="text" class="input-note-title" placeholder="title">
+        <textarea class="input-note" placeholder="content"></textarea>
+        <input type="button" value="Send" class="input-button">
+        <input type="button" value="Refresh" class="input-button-2">
+
+        <div class="notes-div"></div>
+    </body>
+</html>
