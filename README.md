@@ -1,1 +1,1 @@
-# notes-app
+Notes-app allows the user to write and store notes that are accessible with the user's credentials. The project contains a simple web interface and a Node.js server that is used to handle requests between the interface and a MongoDB database. For the use of this project, a connection string for a MongoDB database is required, and it is not provided in the project.
