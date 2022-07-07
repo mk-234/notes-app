@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 var cors = require('cors');
 
-app.use(cors({origin: 'http://localhost'}));
+//when confronted with CORS, the array below can be updated
+app.use(cors({origin: ['http://localhost', 'http://localhost:19006']}));
 const router = require('./routes/routes');
 const mongoose = require('mongoose');
 
